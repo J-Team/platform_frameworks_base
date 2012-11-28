@@ -1,4 +1,7 @@
 /*
+ * Copyright (c) 2013, The Linux Foundation. All rights reserved.
+ * Not a Contribution.
+ *
  * Copyright (C) 2007 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,6 +53,16 @@ public class MediaFile {
     public static final int FILE_TYPE_FLAC    = 10;
     private static final int FIRST_AUDIO_FILE_TYPE = FILE_TYPE_MP3;
     private static final int LAST_AUDIO_FILE_TYPE = FILE_TYPE_FLAC;
+
+    // More audio file types
+    public static final int FILE_TYPE_DTS   = 300;
+    public static final int FILE_TYPE_3GPA  = 301;
+    public static final int FILE_TYPE_AC3   = 302;
+    public static final int FILE_TYPE_QCP   = 303;
+    public static final int FILE_TYPE_PCM   = 304;
+    public static final int FILE_TYPE_EC3   = 305;
+    private static final int FIRST_AUDIO_FILE_TYPE2 = FILE_TYPE_DTS;
+    private static final int LAST_AUDIO_FILE_TYPE2 = FILE_TYPE_EC3;
 
     // MIDI file types
     public static final int FILE_TYPE_MID     = 11;
