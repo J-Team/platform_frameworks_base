@@ -22,7 +22,7 @@
 #     $(call add-clean-step, touch -c external/sqlite/sqlite3.h)
 #     $(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/STATIC_LIBRARIES/libz_intermediates)
 #
-# Always use "touch -c" and "rm -f" or "rm -rf" to gracefully deal with
+# Always use "touch -c" and "rm -f" or "rm -rf" to gracefully deal with 
 # files that are missing or have been moved.
 #
 # Use $(PRODUCT_OUT) to get to the "out/target/product/blah/" directory.
