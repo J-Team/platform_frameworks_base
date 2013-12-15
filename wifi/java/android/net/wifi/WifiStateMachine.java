@@ -168,8 +168,6 @@ public class WifiStateMachine extends StateMachine {
 
     private PowerManager.WakeLock mSuspendWakeLock;
 
-    private List<WifiChannel> mSupportedChannels;
-
     /**
      * Interval in milliseconds between polling for RSSI
      * and linkspeed information
@@ -436,12 +434,6 @@ public class WifiStateMachine extends StateMachine {
     static final int CMD_IP_ADDRESS_REMOVED               = BASE + 141;
     /* Reload all networks and reconnect */
     static final int CMD_RELOAD_TLS_AND_RECONNECT         = BASE + 142;
-
-    /* Is IBSS mode supported by the driver? */
-    public static final int CMD_GET_IBSS_SUPPORTED        = BASE + 143;
-
-    /* Get supported channels */
-    public static final int CMD_GET_SUPPORTED_CHANNELS    = BASE + 144;
 
     /* Wifi state machine modes of operation */
     /* CONNECT_MODE - connect to any 'known' AP when it becomes available */
@@ -1564,20 +1556,6 @@ public class WifiStateMachine extends StateMachine {
         mWifiP2pChannel.sendMessage(WifiP2pService.SET_COUNTRY_CODE, countryCode);
     }
 
-    public int syncIsIbssSupported(AsyncChannel channel) {
-        Message resultMsg = channel.sendMessageSynchronously(CMD_GET_IBSS_SUPPORTED);
-        int result = resultMsg.arg1;
-        resultMsg.recycle();
-        return result;
-    }
-
-    public List<WifiChannel> syncGetSupportedChannels(AsyncChannel channel) {
-        Message resultMsg = channel.sendMessageSynchronously(CMD_GET_SUPPORTED_CHANNELS);
-        List<WifiChannel> result = (List<WifiChannel>) resultMsg.obj;
-        resultMsg.recycle();
-        return result;
-    }
-
     /**
      * Returns the operational country code
      */
@@ -2523,9 +2501,6 @@ public class WifiStateMachine extends StateMachine {
                 case CMD_SAVE_CONFIG:
                     replyToMessage(message, message.what, FAILURE);
                     break;
-                case CMD_GET_SUPPORTED_CHANNELS:
-                    replyToMessage(message, message.what, (List<WifiChannel>) null);
-                    break;
                 case CMD_GET_CONFIGURED_NETWORKS:
                     replyToMessage(message, message.what, (List<WifiConfiguration>) null);
                     break;
@@ -2813,12 +2788,6 @@ public class WifiStateMachine extends StateMachine {
                     mWifiConfigStore.loadAndEnableAllNetworks();
                     initializeWpsDetails();
 
-<<<<<<< HEAD
-=======
-                    mIbssSupported = mWifiNative.getModeCapability("IBSS");
-                    mSupportedChannels = mWifiNative.getSupportedChannels();
-
->>>>>>> f0a3968... Wifi: Get the list of supported channels
                     sendSupplicantConnectionChangedBroadcast(true);
                     transitionTo(mDriverStartedState);
                     break;
@@ -2847,11 +2816,6 @@ public class WifiStateMachine extends StateMachine {
                 case CMD_SET_FREQUENCY_BAND:
                 case CMD_START_PACKET_FILTERING:
                 case CMD_STOP_PACKET_FILTERING:
-<<<<<<< HEAD
-=======
-                case CMD_GET_IBSS_SUPPORTED:
-                case CMD_GET_SUPPORTED_CHANNELS:
->>>>>>> f0a3968... Wifi: Get the list of supported channels
                     deferMessage(message);
                     break;
                 default:
@@ -2915,13 +2879,6 @@ public class WifiStateMachine extends StateMachine {
                 case CMD_SET_OPERATIONAL_MODE:
                     mOperationalMode = message.arg1;
                     break;
-<<<<<<< HEAD
-=======
-                case CMD_GET_IBSS_SUPPORTED:
-                case CMD_GET_SUPPORTED_CHANNELS:
-                    deferMessage(message);
-                    break;
->>>>>>> f0a3968... Wifi: Get the list of supported channels
                 default:
                     return NOT_HANDLED;
             }
@@ -3276,15 +3233,6 @@ public class WifiStateMachine extends StateMachine {
                         mWifiNative.startTdls(remoteAddress, enable);
                     }
                     break;
-<<<<<<< HEAD
-=======
-                case CMD_GET_IBSS_SUPPORTED:
-                    replyToMessage(message, message.what, mIbssSupported ? 1 : 0);
-                    break;
-                case CMD_GET_SUPPORTED_CHANNELS:
-                    replyToMessage(message, message.what, mSupportedChannels);
-                    break;
->>>>>>> f0a3968... Wifi: Get the list of supported channels
                 default:
                     return NOT_HANDLED;
             }
