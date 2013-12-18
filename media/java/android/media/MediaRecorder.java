@@ -1,7 +1,4 @@
 /*
- * Copyright (c) 2013, The Linux Foundation. All rights reserved.
- * Not a Contribution.
- *
  * Copyright (C) 2007 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -280,12 +277,6 @@ public class MediaRecorder
 
         /** @hide H.264/AAC data encapsulated in MPEG2/TS */
         public static final int OUTPUT_FORMAT_MPEG2TS = 8;
-        /** @hide QCP file format */
-        public static final int QCP = 9;
-        /** @hide 3GPP2 media file format*/
-        public static final int THREE_GPP2 = 10;
-        /** @hide WAVE media file format*/
-        public static final int WAVE = 10;
     };
 
     /**
