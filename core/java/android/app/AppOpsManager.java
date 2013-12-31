@@ -185,15 +185,9 @@ public class AppOpsManager {
     /** @hide Continually monitoring location data with a relatively high power request. */
     public static final int OP_MONITOR_HIGH_POWER_LOCATION = 42;
     /** @hide */
-<<<<<<< HEAD
-    public static final int _NUM_OP = 43;
-=======
-    public static final int OP_WIFI_CHANGE = 43;
+    public static final int OP_BLUETOOTH_CHANGE = 43;
     /** @hide */
-    public static final int OP_BLUETOOTH_CHANGE = 44;
-    /** @hide */
-    public static final int _NUM_OP = 45;
->>>>>>> 9207f1b... AppOps: Add Bluetooth enable control into AppOps
+    public static final int _NUM_OP = 44;
 
     /** Access to coarse location information. */
     public static final String OPSTR_COARSE_LOCATION =
@@ -260,11 +254,7 @@ public class AppOpsManager {
             OP_WAKE_LOCK,
             OP_COARSE_LOCATION,
             OP_COARSE_LOCATION,
-<<<<<<< HEAD
-=======
-            OP_WIFI_CHANGE,
             OP_BLUETOOTH_CHANGE,
->>>>>>> 9207f1b... AppOps: Add Bluetooth enable control into AppOps
     };
 
     /**
@@ -315,11 +305,7 @@ public class AppOpsManager {
             null,
             OPSTR_MONITOR_LOCATION,
             OPSTR_MONITOR_HIGH_POWER_LOCATION,
-<<<<<<< HEAD
-=======
             null,
-            null,
->>>>>>> 9207f1b... AppOps: Add Bluetooth enable control into AppOps
     };
 
     /**
@@ -370,11 +356,7 @@ public class AppOpsManager {
             "WAKE_LOCK",
             "MONITOR_LOCATION",
             "MONITOR_HIGH_POWER_LOCATION",
-<<<<<<< HEAD
-=======
-            "WIFI_CHANGE",
             "BLUETOOTH_CHANGE",
->>>>>>> 9207f1b... AppOps: Add Bluetooth enable control into AppOps
     };
 
     /**
@@ -425,11 +407,7 @@ public class AppOpsManager {
             android.Manifest.permission.WAKE_LOCK,
             null, // no permission for generic location monitoring
             null, // no permission for high power location monitoring
-<<<<<<< HEAD
-=======
-            android.Manifest.permission.CHANGE_WIFI_STATE,
             android.Manifest.permission.BLUETOOTH,
->>>>>>> 9207f1b... AppOps: Add Bluetooth enable control into AppOps
     };
 
     /**
@@ -452,35 +430,6 @@ public class AppOpsManager {
             AppOpsManager.MODE_ALLOWED,
             AppOpsManager.MODE_ALLOWED,
             AppOpsManager.MODE_IGNORED, // OP_WRITE_SMS
-<<<<<<< HEAD
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-            AppOpsManager.MODE_ALLOWED,
-=======
             AppOpsManager.MODE_ALLOWED, // OP_RECEIVE_SMS
             AppOpsManager.MODE_ALLOWED, // OP_RECEIVE_EMERGECY_SMS
             AppOpsManager.MODE_ALLOWED, // OP_RECEIVE_MMS
@@ -508,7 +457,6 @@ public class AppOpsManager {
             AppOpsManager.MODE_ALLOWED, // OP_WAKE_LOCK
             AppOpsManager.MODE_ALLOWED, // OP_MONITOR_LOCATION
             AppOpsManager.MODE_ALLOWED, // OP_MONITOR_HIGH_POWER_LOCATION
-            AppOpsManager.MODE_ALLOWED, // OP_WIFI_CHANGE
             AppOpsManager.MODE_ALLOWED, // OP_BLUETOOTH_CHANGE
     };
 
@@ -516,34 +464,34 @@ public class AppOpsManager {
      * This specifies the default mode for each strict operation.
      */
     private static int[] sOpDefaultStrictMode = new int[] {
-            AppOpsManager.MODE_ASK,     // OP_COARSE_LOCATION
-            AppOpsManager.MODE_ASK,     // OP_FINE_LOCATION
-            AppOpsManager.MODE_ASK,     // OP_GPS
+            AppOpsManager.MODE_ALLOWED, // OP_COARSE_LOCATION
+            AppOpsManager.MODE_ALLOWED, // OP_FINE_LOCATION
+            AppOpsManager.MODE_ALLOWED, // OP_GPS
             AppOpsManager.MODE_ALLOWED, // OP_VIBRATE
-            AppOpsManager.MODE_ASK,     // OP_READ_CONTACTS
-            AppOpsManager.MODE_ASK,     // OP_WRITE_CONTACTS
-            AppOpsManager.MODE_ASK,     // OP_READ_CALL_LOG
-            AppOpsManager.MODE_ASK,     // OP_WRITE_CALL_LOG
+            AppOpsManager.MODE_ALLOWED, // OP_READ_CONTACTS
+            AppOpsManager.MODE_ALLOWED, // OP_WRITE_CONTACTS
+            AppOpsManager.MODE_ALLOWED, // OP_READ_CALL_LOG
+            AppOpsManager.MODE_ALLOWED, // OP_WRITE_CALL_LOG
             AppOpsManager.MODE_ALLOWED, // OP_READ_CALENDAR
             AppOpsManager.MODE_ALLOWED, // OP_WRITE_CALENDAR
-            AppOpsManager.MODE_ASK,     // OP_WIFI_SCAN
+            AppOpsManager.MODE_ALLOWED, // OP_WIFI_SCAN
             AppOpsManager.MODE_ALLOWED, // OP_POST_NOTIFICATION
             AppOpsManager.MODE_ALLOWED, // OP_NEIGHBORING_CELLS
-            AppOpsManager.MODE_ASK,     // OP_CALL_PHONE
-            AppOpsManager.MODE_ASK,     // OP_READ_SMS
-            AppOpsManager.MODE_ASK,     // OP_WRITE_SMS
-            AppOpsManager.MODE_ASK,     // OP_RECEIVE_SMS
+            AppOpsManager.MODE_ALLOWED, // OP_CALL_PHONE
+            AppOpsManager.MODE_ALLOWED, // OP_READ_SMS
+            AppOpsManager.MODE_ALLOWED, // OP_WRITE_SMS
+            AppOpsManager.MODE_ALLOWED, // OP_RECEIVE_SMS
             AppOpsManager.MODE_ALLOWED, // OP_RECEIVE_EMERGECY_SMS
-            AppOpsManager.MODE_ASK,     // OP_RECEIVE_MMS
+            AppOpsManager.MODE_ALLOWED, // OP_RECEIVE_MMS
             AppOpsManager.MODE_ALLOWED, // OP_RECEIVE_WAP_PUSH
-            AppOpsManager.MODE_ASK,     // OP_SEND_SMS
+            AppOpsManager.MODE_ALLOWED, // OP_SEND_SMS
             AppOpsManager.MODE_ALLOWED, // OP_READ_ICC_SMS
             AppOpsManager.MODE_ALLOWED, // OP_WRITE_ICC_SMS
             AppOpsManager.MODE_ALLOWED, // OP_WRITE_SETTINGS
             AppOpsManager.MODE_ALLOWED, // OP_SYSTEM_ALERT_WINDOW
             AppOpsManager.MODE_ALLOWED, // OP_ACCESS_NOTIFICATIONS
-            AppOpsManager.MODE_ASK,     // OP_CAMERA
-            AppOpsManager.MODE_ASK,     // OP_RECORD_AUDIO
+            AppOpsManager.MODE_ALLOWED, // OP_CAMERA
+            AppOpsManager.MODE_ALLOWED, // OP_RECORD_AUDIO
             AppOpsManager.MODE_ALLOWED, // OP_PLAY_AUDIO
             AppOpsManager.MODE_ALLOWED, // OP_READ_CLIPBOARD
             AppOpsManager.MODE_ALLOWED, // OP_WRITE_CLIPBOARD
@@ -558,10 +506,8 @@ public class AppOpsManager {
             AppOpsManager.MODE_ALLOWED, // OP_AUDIO_BLUETOOTH_VOLUME
             AppOpsManager.MODE_ALLOWED, // OP_WAKE_LOCK
             AppOpsManager.MODE_ALLOWED, // OP_MONITOR_LOCATION
-            AppOpsManager.MODE_ASK,     // OP_MONITOR_HIGH_POWER_LOCATION
-            AppOpsManager.MODE_ASK,     // OP_WIFI_CHANGE
-            AppOpsManager.MODE_ASK,     // OP_BLUETOOTH_CHANGE
->>>>>>> 9207f1b... AppOps: Add Bluetooth enable control into AppOps
+            AppOpsManager.MODE_ALLOWED, // OP_MONITOR_HIGH_POWER_LOCATION
+            AppOpsManager.MODE_ALLOWED, // OP_BLUETOOTH_CHANGE
     };
 
     /**
@@ -615,11 +561,7 @@ public class AppOpsManager {
             false,
             false,
             false,
-<<<<<<< HEAD
-=======
             false,
-            false,
->>>>>>> 9207f1b... AppOps: Add Bluetooth enable control into AppOps
     };
 
     private static HashMap<String, Integer> sOpStrToOp = new HashMap<String, Integer>();

@@ -1327,7 +1327,6 @@
         <item>353</item>
     </string-array>
 
-<<<<<<< HEAD
     <!-- Boolean to enable stk functionality on Samsung phones -->
     <bool name="config_samsung_stk">false</bool>
 
@@ -1335,14 +1334,6 @@
          The existence of this file will be used to determine in the
          legacy USB manager should be started. -->
     <string name="config_legacyUmsLunFile">/sys/devices/platform/usb_mass_storage/lun0/file</string>
-
-=======
-    <!-- set to false if we dont need to consider data
-         service state to display signal strength bars -->
-    <bool name="config_combined_signal">true</bool>
-
-    <!-- Whether cpu boost is enabled for overscroller fling. -->
-    <bool name="config_enableCpuBoostForOverScrollerFling">false</bool>
 
     <!-- User display names for app ops codes -->
     <string-array name="app_ops_labels">
@@ -1389,8 +1380,6 @@
         <item>Trying to Keep device awake</item>
         <item>Trying to access location</item>
         <item>Trying to access location</item>
-        <item>Trying to turn on/off Wifi</item>
         <item>Trying to turn on/off bluetooth</item>
     </string-array>
->>>>>>> 9207f1b... AppOps: Add Bluetooth enable control into AppOps
 </resources>
