@@ -433,8 +433,10 @@ class AlarmManagerService extends IAlarmManager.Stub {
         final Pair<String, ComponentName> mTarget;
         final BroadcastStats mBroadcastStats;
         final FilterStats mFilterStats;
+        final int mUid;
 
-        InFlight(AlarmManagerService service, PendingIntent pendingIntent, WorkSource workSource) {
+        InFlight(AlarmManagerService service, PendingIntent pendingIntent,
+                      WorkSource workSource, int uid) {
             mPendingIntent = pendingIntent;
             mWorkSource = workSource;
             Intent intent = pendingIntent.getIntent();
@@ -448,6 +450,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
                 mBroadcastStats.filterStats.put(mTarget, fs);
             }
             mFilterStats = fs;
+            mUid = uid;
         }
     }
 
@@ -770,7 +773,56 @@ class AlarmManagerService extends IAlarmManager.Stub {
             removeLocked(operation);
         }
     }
+<<<<<<< HEAD
     
+=======
+
+    /* updates the blocked uids, so if a wake lock is acquired to only fire
+     * alarm for it, it can be released.
+     */
+    void updateBlockedUids(int uid, boolean isBlocked) {
+        if (localLOGV) Slog.v(TAG, "UpdateBlockedUids: uid = "+uid +"isBlocked = "+isBlocked);
+        synchronized(mLock) {
+            if(isBlocked) {
+                for( int i=0; i < mTriggeredUids.size(); i++) {
+                    if(mTriggeredUids.contains(new Integer(uid))) {
+                        if (localLOGV) {
+                            Slog.v(TAG,"TriggeredUids has this uid, mBroadcastRefCount="
+                                +mBroadcastRefCount);
+                        }
+                        mTriggeredUids.remove(new Integer(uid));
+                        mBlockedUids.add(new Integer(uid));
+                        if(mBroadcastRefCount > 0){
+                            mBroadcastRefCount--;
+                            if (mBroadcastRefCount == 0) {
+                                /* all the uids for which the alarms are triggered
+                                 * are either blocked or have called onSendFinished.
+                                */
+                                mWakeLock.release();
+                                if (localLOGV) Slog.v(TAG, "AM WakeLock Released Internally");
+                            }
+                        } else {
+                            if (localLOGV) {
+                                Slog.v(TAG, "Trying to decrement mBroadcastRefCount past zero");
+                            }
+                        }
+                    } else {
+                        //no more matching uids break from the for loop
+                        break;
+                    }
+                }
+            } else {
+                for(int i =0; i < mBlockedUids.size(); i++) {
+                    if(!mBlockedUids.remove(new Integer(uid))) {
+                        //no more matching uids break from the for loop
+                        break;
+                     }
+                }
+            }
+        }
+    }
+
+>>>>>>> 1f25dc4... Fix alarm wakelock not being released.
     public void removeLocked(PendingIntent operation) {
         boolean didRemove = false;
         for (int i = mAlarmBatches.size() - 1; i >= 0; i--) {
@@ -1276,7 +1328,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
                                 mWakeLock.acquire();
                             }
                             final InFlight inflight = new InFlight(AlarmManagerService.this,
-                                    alarm.operation, alarm.workSource);
+                                    alarm.operation, alarm.workSource, alarm.uid);
                             mInFlight.add(inflight);
                             mBroadcastRefCount++;
 
@@ -1506,9 +1558,11 @@ class AlarmManagerService extends IAlarmManager.Stub {
         public void onSendFinished(PendingIntent pi, Intent intent, int resultCode,
                 String resultData, Bundle resultExtras) {
             synchronized (mLock) {
+                int uid = 0;
                 InFlight inflight = null;
                 for (int i=0; i<mInFlight.size(); i++) {
                     if (mInFlight.get(i).mPendingIntent == pi) {
+                        uid = mInFlight.get(i).mUid;
                         inflight = mInFlight.remove(i);
                         break;
                     }
@@ -1530,6 +1584,7 @@ class AlarmManagerService extends IAlarmManager.Stub {
                 } else {
                     mLog.w("No in-flight alarm for " + pi + " " + intent);
                 }
+<<<<<<< HEAD
                 mBroadcastRefCount--;
                 if (mBroadcastRefCount == 0) {
                     mWakeLock.release();
@@ -1538,6 +1593,28 @@ class AlarmManagerService extends IAlarmManager.Stub {
                                 + " remaining inflights");
                         for (int i=0; i<mInFlight.size(); i++) {
                             mLog.w("  Remaining #" + i + ": " + mInFlight.get(i));
+=======
+                mTriggeredUids.remove(new Integer(uid));
+                if(mBlockedUids.contains(new Integer(uid))) {
+                    mBlockedUids.remove(new Integer(uid));
+                } else {
+                    if(mBroadcastRefCount > 0){
+                        mBroadcastRefCount--;
+                        if (mBroadcastRefCount == 0) {
+                            mWakeLock.release();
+                            if (mInFlight.size() > 0) {
+                                mLog.w("Finished all broadcasts with " + mInFlight.size()
+                                    + " remaining inflights");
+                                for (int i=0; i<mInFlight.size(); i++) {
+                                    mLog.w("  Remaining #" + i + ": " + mInFlight.get(i));
+                                }
+                                mInFlight.clear();
+                            }
+                        }
+                    } else {
+                        if(localLOGV) {
+                            Slog.e(TAG,"Trying to decrement mBroadcastRefCnt past zero");
+>>>>>>> 1f25dc4... Fix alarm wakelock not being released.
                         }
                         mInFlight.clear();
                     }
