@@ -811,50 +811,6 @@ public final class PowerManagerService extends IPowerManager.Stub
         }
     }
 
-<<<<<<< HEAD
-=======
-    /* updates the blocked uids, so if a wake lock is acquired for it
-     * can be released.
-     */
-    public void updateBlockedUids(int uid, boolean isBlocked) {
-        synchronized(mLock) {
-            if (DEBUG_SPEW) Slog.v(TAG, "updateBlockedUids: uid = "+uid +"isBlocked = "+isBlocked);
-            if(isBlocked) {
-                mBlockedUids.add(new Integer(uid));
-                for (int index = 0; index < mWakeLocks.size(); index++) {
-                    WakeLock wl = mWakeLocks.get(index);
-                    if(wl != null) {
-                        // release the wakelock for the blocked uid
-                        if (wl.mOwnerUid == uid || checkWorkSourceObjectId(uid, wl)) {
-                            releaseWakeLockInternal(wl.mLock, wl.mFlags);
-                            index--;
-                            if (DEBUG_SPEW) Slog.v(TAG, "Internally releasing it");
-                        }
-                    }
-                }
-            }
-            else {
-                mBlockedUids.remove(new Integer(uid));
-            }
-        }
-    }
-
-    private boolean checkWorkSourceObjectId(int uid, WakeLock wl) {
-        try {
-            for (int index = 0; index < wl.mWorkSource.size(); index++) {
-                if (uid == wl.mWorkSource.get(index)) {
-                    if (DEBUG_SPEW) Slog.v(TAG, "WS uid matched");
-                    return true;
-                }
-            }
-        }
-        catch (Exception e) {
-            return false;
-        }
-        return false;
-    }
-
->>>>>>> 1f25dc4... Fix alarm wakelock not being released.
     private int findWakeLockIndexLocked(IBinder lock) {
         final int count = mWakeLocks.size();
         for (int i = 0; i < count; i++) {
