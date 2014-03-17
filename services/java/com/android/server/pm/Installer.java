@@ -145,7 +145,6 @@ public final class Installer {
         return true;
     }
 
-<<<<<<< HEAD
     private synchronized String transaction(String cmd) {
         if (!connect()) {
             Slog.e(TAG, "connection failed");
@@ -161,55 +160,6 @@ public final class Installer {
             Slog.e(TAG, "write command failed? reconnect!");
             if (!connect() || !writeCommand(cmd)) {
                 return "-1";
-=======
-
-    private String transaction(String cmd) {
-        int transactionId;
-        synchronized (mTransactionIdLock) {
-            transactionId = mLastTransactionId++;
-            if (mLastTransactionId < 0) {
-                mLastTransactionId = 0;
-            }
-        }
-
-        try {
-            synchronized (mResponses) {
-                long startWaitTime = System.currentTimeMillis();
-                while(mResponses.get(transactionId) == null) {
-                    synchronized (mPendingRequests) {
-                        if (!mPendingRequests.contains(transactionId)) {
-                            if (!connect()) {
-                                Slog.e(TAG, "connection failed");
-                                return "-1";
-                            }
-
-                            if (!writeCommand(cmd, transactionId)) {
-                                /*
-                                 * If installd died and restarted in the background (unlikely but
-                                 * possible) we'll fail on the next write (this one). Try to
-                                 * reconnect and write the command one more time before giving up.
-                                 */
-                                Slog.e(TAG, "write command failed? reconnect!");
-                                if (!connect() || !writeCommand(cmd, transactionId)) {
-                                    return "-1";
-                                }
-                            }
-                            if (LOCAL_DEBUG) {
-                                Slog.i(TAG, "send ["+transactionId+"]: '" + cmd + "'");
-                            }
-                            mPendingRequests.add(transactionId);
-                            checkPoller();
-                        }
-                    }
-                    final long timeToWait = startWaitTime - System.currentTimeMillis() + 100000;
-                    if (timeToWait > 0) {
-                        mResponses.wait(100000);
-                    } else {
-                        Slog.e(TAG, "timeout wating for response");
-                        break;
-                    }
-                }
->>>>>>> 6b387f0... PackageManager: Fix reconnection logic in Installer.
             }
         }
         if (LOCAL_DEBUG) {
