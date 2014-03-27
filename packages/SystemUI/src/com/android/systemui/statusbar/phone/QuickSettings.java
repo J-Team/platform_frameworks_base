@@ -384,14 +384,7 @@ class QuickSettings {
         wifiTile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startSettingsActivity(android.provider.Settings.ACTION_WIFI_SETTINGS);
-            }
-        });
-        if (LONG_PRESS_TOGGLES) {
-            wifiTile.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    final boolean enable =
+                final boolean enable =
                             (mWifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLED);
                     new AsyncTask<Void, Void, Void>() {
                         @Override
@@ -407,6 +400,13 @@ class QuickSettings {
                             return null;
                         }
                     }.execute();
+            }
+        });
+        if (LONG_PRESS_TOGGLES) {
+            wifiTile.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    startSettingsActivity(android.provider.Settings.ACTION_WIFI_SETTINGS);
                     wifiTile.setPressed(false);
                     return true;
                 }} );
@@ -562,18 +562,18 @@ class QuickSettings {
             bluetoothTile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startSettingsActivity(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+                    if (mBluetoothAdapter.isEnabled()) {
+                            mBluetoothAdapter.disable();
+                        } else {
+                            mBluetoothAdapter.enable();
+                        }
                 }
             });
             if (LONG_PRESS_TOGGLES) {
                 bluetoothTile.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        if (mBluetoothAdapter.isEnabled()) {
-                            mBluetoothAdapter.disable();
-                        } else {
-                            mBluetoothAdapter.enable();
-                        }
+                        startSettingsActivity(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
                         bluetoothTile.setPressed(false);
                         return true;
                     }});
