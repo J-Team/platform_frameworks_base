@@ -1777,4 +1777,15 @@
 
   <java-symbol type="string" name="config_legacyUmsLunFile" />
 
+  <!-- Power menu -->
+  <java-symbol type="drawable" name="ic_lock_reboot" />
+
+  <java-symbol type="string" name="global_action_reboot" />
+  <java-symbol type="string" name="global_actions" />
+
+  <java-symbol type="array" name="shutdown_reboot_actions" />
+  <java-symbol type="array" name="shutdown_reboot_options" />
+  <java-symbol type="string" name="reboot_progress" />
+  <java-symbol type="string" name="reboot_system" />
+
 </resources>
