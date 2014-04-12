@@ -65,6 +65,7 @@ public class DessertCaseView extends FrameLayout {
             R.drawable.dessert_honeycomb,   // 2011
             R.drawable.dessert_ics,         // 2011
             R.drawable.dessert_jellybean,   // 2012
+            R.drawable.jteam_ste,           // 2014: J-Team Logo
     };
 
     private static final int[] XRARE_PASTRIES = {
